@@ -47,13 +47,18 @@ function draw_grid() {
             else if (tile.type == 3) {
                 fill(255,0,0)
             }
+            else if (tile.type == 4) {
+                fill(0,0,255)
+            }
 
             if (endX == i && endY == j) {
-                fill(255,0,0)
+                fill(150,0,0)
             }
             if (startX == i && startY == j) {
-                fill(0,255,0)
+                fill(0,150,0)
             }
+
+            
 
             stroke(0);
             rect(tile.x*blockSize, tile.y*blockSize, blockSize, blockSize);
@@ -157,7 +162,15 @@ function draw() {
 }
 
 function RetracePath() {
-    return;
+    let path = []
+    let currentNode = grid[endX][endY];
+
+    while (currentNode.x != startX || currentNode.y != startY) {
+        grid[currentNode.x][currentNode.y].type = 4;
+        path.push(currentNode);
+        currentNode = currentNode.parent;
+    }
+    return path;
 }
 
 function getNeighbours(node) {
